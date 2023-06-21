@@ -1,0 +1,130 @@
+﻿@page
+@model KR.Pages.FilmModel
+
+
+<div class="container w-auto">
+    <div class="container mt-5 mb-5">
+        <form asp-page-handler="FilmsFilter" method="post" class="mt-5">
+            <div class="d-flex flex-row border-dark border-3">
+               <div class="flex-fill mr-4">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Actors</label>
+                                <select class="form-control" name="actor" asp-for="@Model.SelectedActor">
+                                    <option value="">All</option>
+                                    @foreach (var actor in Model.Actors)
+                                    {
+                                        <option value="@actor.FirstName @actor.LastName">
+                                            @actor.FirstName @actor.LastName
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Languages</label>
+                                <select class="form-control" name="language" asp-for="@Model.SelectedLanguage">
+                                    <option value="">All</option>
+                                    @foreach (var language in Model.Languages)
+                                    {
+                                        <option value="@language.Name">@language.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Categories</label>
+                                <select class="form-control" name="categorie" asp-for="@Model.SelectedCategory">
+                                    <option value="">All</option>
+                                    @foreach (var categorie in Model.Categories)
+                                    {
+                                        <option value="@categorie.Name">@categorie.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-fill" style="position: relative;">
+                    <button type="submit" class="btn btn-dark ms-4 w-25" style="position: absolute; bottom: 0;">
+                        Show
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <h1 class="text-center mb-5">Films</h1>
+    <p>Total number of movies in the table: @Model.Films.Count</p>
+    <hr class="w-25"/>
+    <table class="table border-3" style="background-color: #353535">
+        <thead style="color: #FFFDE7">
+            <tr>
+                <th class="text-center align-top">ID</th>
+                <th class="text-center align-top">Title</th>
+                <th class="text-center align-top">Description</th>
+                <th class="text-center align-top">Release year</th>
+                <th class="text-center align-top">Languages</th>
+                <th class="text-center align-top">Actors</th>
+                <th class="text-center align-top">Categories</th>
+                <th class="text-center align-top">Rental duration</th>
+                <th class="text-center align-top">Rental rate</th>
+                <th class="text-center align-top">Length</th>
+                <th class="text-center align-top">Replacment cost</th>
+                <th class="text-center align-top">Rating</th>
+                <th class="text-center align-top">Special futures</th>
+                <th class="text-center align-top">Last update</th>
+            </tr>
+        </thead>
+        <tbody style="color: #E0F7FA">
+            @foreach (var film in Model.Films)
+            {
+                <tr>
+                    <td class="text-center align-top">@film.FilmId</td>
+                    <td class="text-center align-top">@film.Title</td>
+                    <td class="text-center align-top">@film.Description</td>
+                    <td class="text-center align-top">@film.ReleaseYear</td>
+                    <td class="text-center align-top">
+                        @if (film.Languages != null)
+                        {
+                            @foreach (var language in film.Languages)
+                            {
+                                <p>@language.Name</p>
+                            }
+                        }
+                    </td>
+                    <td class="text-center align-top">
+                        @if (film.Actors != null)
+                        {
+                            @foreach (var actor in film.Actors)
+                            {
+                                <p>@actor.FirstName @actor.LastName</p>
+                            }
+                        }
+                    </td>
+                    <td class="text-center align-top">
+                        @if (film.Categories != null)
+                        {
+                            @foreach (var categorie in film.Categories)
+                            {
+                                <p>@categorie.Name</p>
+                            }
+                        }
+                    </td>
+                    <td class="text-center align-top">@film.RentalDuration</td>
+                    <td class="text-center align-top">@film.RentalRate</td>
+                    <td class="text-center align-top">@film.Length</td>
+                    <td class="text-center align-top">@film.ReplacementCost</td>
+                    <td class="text-center align-top">@film.Rating</td>
+                    <td class="text-center align-top">@film.SpecialFeatures</td>
+                    <td class="text-center align-top">@film.LastUpdate.ToString("d")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
